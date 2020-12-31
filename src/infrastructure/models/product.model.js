@@ -1,0 +1,20 @@
+const { Schema, model } = require('../database')
+
+const productSchema = new Schema({
+  description: {
+    type: String,
+    required: true,
+    index: 'text'
+  },
+  erpId: {
+    type: String,
+    unique: true,
+    required: true
+  }
+}, {
+  timestamps: true
+})
+
+const ProductModel = model('Products', productSchema)
+
+module.exports = { ProductModel }

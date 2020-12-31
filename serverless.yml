@@ -19,10 +19,22 @@ org: vinholi
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 frameworkVersion: '2'
+plugins: 
+  - serverless-offline
+  - serverless-offline-sns
+
+custom:
+  serverless-offline-sns:
+    port: 4002
+    debug: true
 
 provider:
   name: aws
   runtime: nodejs12.x
+  environment:
+    DATABASE_URL: mongodb+srv://vinholi:admin@cluster.pgoev.mongodb.net/integration?retryWrites=true&w=majority
+    ERP_URL: https://bling.com.br/Api/v2
+    ERP_API_KEY: 038737d06529d72a376974ebe79bbdde3a1a8e492e7b288239112f500ce4819c5e474ad9
 
 # you can overwrite defaults here
 #  stage: dev
@@ -58,8 +70,18 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  check-order:
+    name: function-check-order
+    handler: src/use-cases/orders/check-order.checkOrder
+    events:
+      - http:
+          path: orders
+          method: post
+  create-order:
+    name: function-create-order
+    handler: src/use-cases/orders/create-order.createOrder
+    events: 
+      - sns: create-order
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -95,10 +117,6 @@ functions:
 #          conditions:
 #            host: example.com
 #            path: /hello
-
-#    Define function environment variables here
-   environment:
-     DATABASE_URL: mongodb+srv://vinholi:admin@cluster.pgoev.mongodb.net/integration?retryWrites=true&w=majority
 
 # you can add CloudFormation resource templates here
 #resources:
