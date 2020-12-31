@@ -1,4 +1,5 @@
-const { Schema, model } = require('../database')
+const { Schema, model, models } = require('../database')
+const { OrderStatusEnum } = require('../../common/enums/order-status.enum')
 
 const clientSubSchema = new Schema({
   name: {
@@ -30,9 +31,18 @@ const orderSchema = new Schema({
   value: {
     type: Number,
     required: true
+  },
+  status: {
+    type: String,
+    enum: [
+      OrderStatusEnum.FINISHED,
+      OrderStatusEnum.OPENED,
+      OrderStatusEnum.CANCELED
+    ]
   }
 }, {
   timestamps: true
 })
 
-module.exports.OrderModel = model('Orders', orderSchema)
+const OrderModel = models.Orders || model('Orders', orderSchema)
+module.exports = { OrderModel }

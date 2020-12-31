@@ -1,3 +1,4 @@
 module.exports.OrderDomain = {
-  createOrder: require('./create-order.domain').createOrder
+  ...require('./create-order.domain'),
+  ...require('./update-order.domain')
 }

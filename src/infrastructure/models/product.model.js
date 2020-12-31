@@ -1,4 +1,4 @@
-const { Schema, model } = require('../database')
+const { Schema, model, models } = require('../database')
 
 const productSchema = new Schema({
   description: {
@@ -15,6 +15,5 @@ const productSchema = new Schema({
   timestamps: true
 })
 
-const ProductModel = model('Products', productSchema)
-
+const ProductModel = models.Products || model('Products', productSchema)
 module.exports = { ProductModel }

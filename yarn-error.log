@@ -1,14 +1,14 @@
 Arguments: 
-  /home/luiz-vinholi/.nvm/versions/node/v15.4.0/bin/node /home/luiz-vinholi/.nvm/versions/node/v15.4.0/bin/yarn remove xml-js
+  /home/luiz-vinholi/.nvm/versions/node/v14.15.2/bin/node /usr/share/yarn/bin/yarn.js
 
 PATH: 
-  /home/luiz-vinholi/.nvm/versions/node/v15.4.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /home/luiz-vinholi/.nvm/versions/node/v14.15.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
-  1.22.10
+  1.22.5
 
 Node version: 
-  15.4.0
+  14.15.2
 
 Platform: 
   linux x64

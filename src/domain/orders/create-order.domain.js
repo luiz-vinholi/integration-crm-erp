@@ -5,7 +5,6 @@ const { OrderRepository } = require('../../infrastructure/repositories/orders/or
   Create order in ERP and insert in database.
 
   @param {{
-    title: string,
     client: {
       id: string,
       name: string,
@@ -39,8 +38,8 @@ module.exports.createOrder = async (
     }
   })
   const order = await _orderRepository.createOrder({
+    erpId: erpOrder.number,
     crmId: orderData.crmId,
-    erpId: erpOrder.id,
     client: orderData.client,
     productId: orderData.product.id,
     value: orderData.value
