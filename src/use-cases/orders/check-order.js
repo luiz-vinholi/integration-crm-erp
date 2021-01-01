@@ -18,18 +18,18 @@ const getTopicNotification = (hasOrder) => {
 }
 
 /**
-  Publish notification according by order data status.
-
-  @param {boolean} hasOrder - Has order in database.
-  @param {{
-    crmId: string,
-    title: string,
-    value: string,
-    status: CrmDealStatusEnum,
-    client: {
-      name: string
-    }
-  }} orderData - Send as payload of the notificaiton
+ * Publish notification according by order data status.
+ *
+ * @param {boolean} hasOrder - Has order in database.
+ * @param {{
+ *   crmId: string,
+ *   title: string,
+ *   value: string,
+ *   status: CrmDealStatusEnum,
+ *   client: {
+ *     name: string
+ *   }
+ * }} orderData - Send as payload of the notificaiton
  */
 const handlePublishNotification = async (hasOrder, dealStatus, orderData) => {
   const topic = getTopicNotification(hasOrder)
@@ -42,9 +42,9 @@ const handlePublishNotification = async (hasOrder, dealStatus, orderData) => {
 }
 
 /**
-  Handle order data.
-
-  @returns Order data to send in notification.
+ * Handle order data.
+ *
+ * @returns Order data to send in notification.
  */
 const handleOrderData = (deal) => {
   const status = {

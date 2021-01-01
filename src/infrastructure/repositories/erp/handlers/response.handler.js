@@ -1,7 +1,6 @@
 class ResponseHandler {
   _handleError (error) {
     const erpError = error.response?.data?.retorno
-    console.log('oiiiiiiiiiiiiii', JSON.stringify(error))
     if (erpError) throw erpError
     throw error
   }

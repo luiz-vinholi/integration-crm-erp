@@ -6,22 +6,22 @@ class ProductRepository {
   }
 
   /**
-    Create product in database.
-
-    @param {{
-      description: string,
-      erpId: string
-    }} productData
+   * Create product in database.
+   *
+   * @param {{
+   *   description: string,
+   *   erpId: string
+   * }} productData
    */
   createProduct (productData) {
     return this.productModel.create(productData)
   }
 
   /**
-    Get one product by description, applying case sensitive
-    and diacritic sensitive filters.
-
-    @param {string} description - Product description.
+   * Get one product by description, applying case sensitive
+   * and diacritic sensitive filters.
+   *
+   * @param {string} description - Product description.
    */
   getProductByDescription (description) {
     return this.productModel.findOne({
