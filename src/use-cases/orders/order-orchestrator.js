@@ -64,7 +64,7 @@ const handleOrderData = (deal) => {
   return orderData
 }
 
-module.exports.checkOrder = async (event) => {
+module.exports.orderOrchestrator = async (event) => {
   const { current: deal } = JSON.parse(event.body)
   const orderRepository = new OrderRepository()
   const hasOrder = await orderRepository.checkIfExistsByCrmId(deal.id)

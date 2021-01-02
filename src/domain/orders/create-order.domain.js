@@ -1,5 +1,6 @@
 const { OrderErpRepository } = require('../../infrastructure/repositories/erp/order-erp.repository')
 const { OrderRepository } = require('../../infrastructure/repositories/orders/order.repository')
+const { OrderStatusEnum } = require('../../common/enums/order-status.enum')
 
 /**
  * Create order in ERP and insert in database.
@@ -42,7 +43,8 @@ module.exports.createOrder = async (
     crmId: orderData.crmId,
     client: orderData.client,
     productId: orderData.product.id,
-    value: orderData.value
+    value: orderData.value,
+    status: OrderStatusEnum.FINISHED
   })
   return order
 }

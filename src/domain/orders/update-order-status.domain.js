@@ -4,7 +4,7 @@ const { OrderErpRepository } = require('../../infrastructure/repositories/erp/or
 const { OrderRepository } = require('../../infrastructure/repositories/orders/order.repository')
 
 /**
- * Update order status in ERP api and in database by erpId.
+ * Update order status in ERP api and database by erpId.
  *
  * @param {ObjectID} id - Order id to update.
  * @param {{
@@ -14,7 +14,7 @@ const { OrderRepository } = require('../../infrastructure/repositories/orders/or
  * @param {OrderErpRepository} _orderErpRepository - Order erp repository injection.
  * @param {OrderRepository} _orderRepository - Order Repository inejction.
  */
-module.exports.updateOrder = async (
+module.exports.updateOrderStatus = async (
   id,
   orderData,
   _orderErpRepository = new OrderErpRepository(),

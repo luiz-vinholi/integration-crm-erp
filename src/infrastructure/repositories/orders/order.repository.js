@@ -1,4 +1,5 @@
 const { OrderModel } = require('../../models/order.model')
+const { OrderStatusEnum } = require('../../../common/enums/order-status.enum')
 
 class OrderRepository {
   constructor () {
@@ -15,7 +16,8 @@ class OrderRepository {
    *    name: string
    *  },
    *  productId: ObjectID,
-   *  value: number
+   *  value: number,
+   *  status: OrderStatusEnum
    * }} orderData
    */
   createOrder (orderData) {
@@ -43,6 +45,33 @@ class OrderRepository {
    */
   checkIfExistsByCrmId (crmId) {
     return this.orderModel.exists({ crmId })
+  }
+
+  /**
+   * Get orders with pagination.
+   *
+   * @param {{
+   *  status: OrderStatusEnum,
+   * }} filters - Query filters.
+   * @param {{
+   *  page: number,
+   *  limit: number
+   * }} pagination - Query pagination.
+   */
+  getOrders (
+    filters,
+    {
+      page = 0,
+      limit = 10
+    }) {
+    const status = filters.status || OrderStatusEnum.FINISHED
+    const skip = page * limit
+    return this.orderModel.find({ status })
+      .populate('product')
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: 'desc' })
+      .lean()
   }
 }
 
