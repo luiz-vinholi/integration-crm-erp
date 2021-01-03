@@ -30,7 +30,7 @@ class OrderErpRepositoryHandler extends ResponseHandler {
   }
 
   _handleCreateOrderSuccessResponse (data) {
-    const product = data.retorno?.pedidos[0]?.pedido
+    const product = data.retorno && data.retorno.pedidos[0] && data.retorno.pedidos[0].pedido
     if (product) {
       return {
         id: product.idPedido,

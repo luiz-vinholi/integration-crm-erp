@@ -11,6 +11,15 @@ custom:
   serverless-offline-sns:
     port: 4002
     debug: true
+  createOrderTopic:
+    Fn::Join:
+      - ":"
+      - - arn
+        - aws
+        - sns
+        - Ref: AWS::Region
+        - Ref: AWS::AccountId
+        - create-order
 
 provider:
   name: aws
@@ -19,6 +28,12 @@ provider:
     DATABASE_URL: mongodb+srv://vinholi:admin@cluster.pgoev.mongodb.net/integration?retryWrites=true&w=majority
     ERP_URL: https://bling.com.br/Api/v2
     ERP_API_KEY: 038737d06529d72a376974ebe79bbdde3a1a8e492e7b288239112f500ce4819c5e474ad9
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - "sns:Publish"
+      Resource:
+        - ${self:custom.createOrderTopic}
 
 functions:
   get-orders:
@@ -35,9 +50,10 @@ functions:
       - http:
           path: orders
           method: post
+    environment:
+      CREATE_ORDER_TOPIC: ${self:custom.createOrderTopic}
   create-order:
     name: function-create-order
     handler: src/handlers/create-order.createOrder
     events: 
-      - sns: 
-          arn: arn:aws:sns:us-east-1:123456789012:create-order
+      - sns: create-order

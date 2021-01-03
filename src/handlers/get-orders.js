@@ -28,14 +28,25 @@ const validateQuery = async (query) => {
   return errorMessage
 }
 
+const handleQuery = (query) => {
+  let page = 0
+  let limit = 10
+  if (query) {
+    page = query.page
+    limit = query.limit
+  }
+  return {
+    page,
+    limit
+  }
+}
+
 module.exports.getOrders = async (event, context) => {
   try {
-    const query = event.queryStringParameters
-    await validateQuery(query)
-    const orders = await OrderDomain.getOrders({
-      page: +query?.page || 0,
-      limit: +query?.limit || 10
-    })
+    const querystring = event.queryStringParameters
+    await validateQuery(querystring)
+    const query = handleQuery(querystring)
+    const orders = await OrderDomain.getOrders(query)
     return responseSuccessHandler(200, orders)
   } catch (error) {
     if (error.name === 'ValidationError') {

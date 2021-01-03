@@ -40,7 +40,7 @@ class ProductErpRepository extends ResponseHandler {
   }
 
   _handleCreateProductSuccessResponse (data) {
-    const erpProduct = data?.retorno?.produtos[0][0]?.produto
+    const erpProduct = data && data.retorno && data.retorno.produtos[0][0] && data.retorno.produtos[0][0].produto
     if (erpProduct) {
       return {
         id: erpProduct.id,

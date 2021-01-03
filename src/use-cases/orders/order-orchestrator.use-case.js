@@ -3,12 +3,17 @@ const { CrmDealStatusEnum } = require('../../common/enums/crm-deal-status.enum')
 const { OrderStatusEnum } = require('../../common/enums/order-status.enum')
 const { OrderRepository } = require('../../infrastructure/repositories/orders/order.repository')
 
-const publishNotificationByTopic = (orderData) => {
+/**
+ * Publish create order SNS notification.
+ *
+ * @param orderData
+ */
+const publishCreateOrderNotification = (orderData) => {
   return new AWS.SNS()
     .publish({
       Message: JSON.stringify({ default: JSON.stringify(orderData) }),
       MessageStructure: 'json',
-      TopicArn: 'arn:aws:sns:us-east-1:123456789012:create-order'
+      TopicArn: process.env.CREATE_ORDER_TOPIC
     })
     .promise()
 }
@@ -29,7 +34,7 @@ const publishNotificationByTopic = (orderData) => {
  */
 const handlePublishNotification = async (dealStatus, orderData) => {
   const publishNotification = {
-    [CrmDealStatusEnum.WON]: () => publishNotificationByTopic(orderData)
+    [CrmDealStatusEnum.WON]: () => publishCreateOrderNotification(orderData)
   }[dealStatus]
   if (publishNotification) await publishNotification()
 }
