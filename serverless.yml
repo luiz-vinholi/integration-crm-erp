@@ -23,27 +23,21 @@ provider:
 functions:
   get-orders:
     name: function-get-orders
-    handler: src/use-cases/orders/get-orders.getOrders
+    handler: src/handlers/get-orders.getOrders
     events:
       - http: 
           path: orders
           method: get
   order-orchestrator:
     name: function-order-orchestrator
-    handler: src/use-cases/orders/order-orchestrator.orderOrchestrator
+    handler: src/handlers/order-orchestrator.orderOrchestrator
     events:
       - http:
           path: orders
           method: post
   create-order:
     name: function-create-order
-    handler: src/use-cases/orders/create-order.createOrder
+    handler: src/handlers/create-order.createOrder
     events: 
       - sns: 
           arn: arn:aws:sns:us-east-1:123456789012:create-order
-  update-order-status:
-    name: function-update-order-status
-    handler: src/use-cases/orders/update-order-status.updateOrderStatus
-    events:
-      - sns:
-          arn: arn:aws:sns:us-east-1:123456789012:update-order-status

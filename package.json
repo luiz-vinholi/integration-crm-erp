@@ -12,6 +12,7 @@
     "aws-sdk": "^2.817.0",
     "axios": "^0.21.1",
     "fast-xml-parser": "^3.17.6",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "yup": "^0.32.8"
   }
 }

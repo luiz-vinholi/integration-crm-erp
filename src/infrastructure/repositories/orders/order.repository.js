@@ -1,5 +1,4 @@
-const { OrderModel } = require('../../models/order.model')
-const { OrderStatusEnum } = require('../../../common/enums/order-status.enum')
+const { OrderModel } = require('../../models')
 
 class OrderRepository {
   constructor () {
@@ -12,10 +11,11 @@ class OrderRepository {
    * @param {{
    *  crmId: string,
    *  erpId: string,
+   *  title: string,
    *  client: {
    *    name: string
    *  },
-   *  productId: ObjectID,
+   *  product: ObjectID,
    *  value: number,
    *  status: OrderStatusEnum
    * }} orderData
@@ -48,30 +48,33 @@ class OrderRepository {
   }
 
   /**
-   * Get orders with pagination.
+   * Get orders with pagination and total orders in dataase.
    *
-   * @param {{
-   *  status: OrderStatusEnum,
-   * }} filters - Query filters.
    * @param {{
    *  page: number,
    *  limit: number
    * }} pagination - Query pagination.
+   ( @returns - Orders and number of total orders in database.
    */
-  getOrders (
-    filters,
-    {
-      page = 0,
-      limit = 10
-    }) {
-    const status = filters.status || OrderStatusEnum.FINISHED
+  async getOrders ({
+    page = 0,
+    limit = 10
+  }) {
     const skip = page * limit
-    return this.orderModel.find({ status })
+    const orders = await this.orderModel.find()
       .populate('product')
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: 'desc' })
       .lean()
+    const total = await this.orderModel.estimatedDocumentCount()
+      .exec()
+    return {
+      total,
+      currentPage: page,
+      limit,
+      orders
+    }
   }
 }
 

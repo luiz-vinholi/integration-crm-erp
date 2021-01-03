@@ -27,13 +27,14 @@ module.exports.createOrder = async (
   _orderRepository = new OrderRepository(),
   _orderErpRepository = new OrderErpRepository()
 ) => {
+  const itemDescription = `[${orderData.crmId}]${orderData.product.description}`
   const erpOrder = await _orderErpRepository.createOrder({
     client: {
       name: orderData.client.name
     },
     item: {
       code: orderData.product.erpId,
-      description: orderData.product.description,
+      description: itemDescription,
       unit_value: orderData.value,
       quantity: 1
     }
@@ -41,8 +42,9 @@ module.exports.createOrder = async (
   const order = await _orderRepository.createOrder({
     erpId: erpOrder.number,
     crmId: orderData.crmId,
+    title: orderData.title,
     client: orderData.client,
-    productId: orderData.product.id,
+    product: orderData.product.id,
     value: orderData.value,
     status: OrderStatusEnum.FINISHED
   })

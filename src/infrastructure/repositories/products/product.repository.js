@@ -1,4 +1,5 @@
-const { ProductModel } = require('../../models/product.model')
+/* eslint-disable no-useless-escape */
+const { ProductModel } = require('../../models')
 
 class ProductRepository {
   constructor () {
@@ -23,14 +24,13 @@ class ProductRepository {
    *
    * @param {string} description - Product description.
    */
-  getProductByDescription (description) {
-    return this.productModel.findOne({
+  async getProductByDescription (description) {
+    const product = await this.productModel.findOne({
       $text: {
-        $search: description,
-        $caseSensitive: true,
-        $diacriticSensitive: true
+        $search: `\"${description}\"`
       }
-    })
+    }).lean()
+    return product
   }
 }
 

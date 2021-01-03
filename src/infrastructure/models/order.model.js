@@ -19,11 +19,15 @@ const orderSchema = new Schema({
     type: String,
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
   client: {
     type: clientSubSchema,
     required: true
   },
-  productId: {
+  product: {
     type: Schema.Types.ObjectID,
     ref: 'Products',
     required: true

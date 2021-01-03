@@ -35,25 +35,6 @@ class OrderErpRepository extends OrderErpRepositoryHandler {
       .then(this._handleCreateOrderSuccessResponse)
       .catch(this._handleError)
   }
-
-  /**
-    Update order status in ERP api.
-
-    @param {string} number - Number of order in ERP.
-    @param {ErpOrderStatusEnum} status - Order status to update in ERP.
-   */
-  async updateOrderStatus (number, status) {
-    const orderData = {
-      pedido: {
-        idSituacao: status
-      }
-    }
-    const xmlOrderData = convertJsToXml(orderData)
-    const query = this._handleQuery(this.apiKey, xmlOrderData)
-    await this.axios.put(`/pedido/${number}/json?${query}`)
-      .then(this._handleSuccess)
-      .catch(this._handleError)
-  }
 }
 
 module.exports = { OrderErpRepository }
