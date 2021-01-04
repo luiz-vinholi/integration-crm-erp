@@ -13,11 +13,13 @@ const clientSubSchema = new Schema({
 const orderSchema = new Schema({
   crmId: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   erpId: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   title: {
     type: String,
