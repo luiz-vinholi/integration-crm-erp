@@ -3,7 +3,8 @@ const { Schema, model, models } = require('../database')
 const productSchema = new Schema({
   description: {
     type: String,
-    required: true
+    required: true,
+    index: 'text'
   },
   erpId: {
     type: String,

@@ -32,8 +32,8 @@ const handleQuery = (query) => {
   let page = 0
   let limit = 10
   if (query) {
-    page = query.page
-    limit = query.limit
+    page = +query.page
+    limit = +query.limit
   }
   return {
     page,

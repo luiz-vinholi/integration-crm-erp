@@ -25,7 +25,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   environment:
-    DATABASE_URL: #DATABASE URL HERE
+    DATABASE_URL: #DATABASE URL HEREz
     ERP_URL: https://bling.com.br/Api/v2
     ERP_API_KEY: # ERP API KEY HERE
   iamRoleStatements:
